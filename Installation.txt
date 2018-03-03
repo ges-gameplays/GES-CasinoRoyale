@@ -1,0 +1,36 @@
+  ----------------------------------------------------------------------------------------------------
+  asino Royale + Casino Royale + Casino Royale + Casino Royale + Casino Royale + Casino Royale + Casin
+  ----------------------------------------------------------------------------------------------------
+                 -oyhdhy+.            -+shhhs+.      -yyyyyyyyyyyyyyyyyyy/ +ooooooooooooooooooooooooo:
+              :yNMMMmhmMMMo        -sNMMMNdmMMMo    :NMMMMMMMMMMMMMMMMMMM::MMMMMMMMMMMMMMMMMMMMMMMMMm-
+           `+mMMMMh:  .NMMM-     /dMMMMd/` `NMMM:  +MMMmoooooooosMMMMMMMo-NMMMMMMMMMMMMmdddddddddddo` 
+          /mMMMMm:    +MMMM/   :dMMMMN+`   -MMMM+ sMMMy`       -mMMMMMN/`osssssssssssso.              
+        .dMMMMMy`    -NMMMM- `yMMMMMh.    `mMMMM:/hhh/       `sMMMMMMh:yNMMMMMMMMMNNd:                
+       +NMMMMN/     .mMMMMd :mMMMMMo     `hMMMMN`          `+NMMMMMm/.mMdssssdMd+:-.`                 
+      sMMMMMm-     .mMMMMM/+MMMMMN/     `hMMMMMo          /mMMMMMNo` -Nd`  -hN+`                      
+     sMMMMMm.     .mMMMMMy+MMMMMN-     `hMMMMMd`        /mMMMMMNs.    ./ `yNs.                        
+    oMMMMMd`     -NMMMMMd/MMMMMm-     .dMMMMMm.      `+mMMMMMNs-/+++++++sNh-                          
+   :MMMMMd`     /NMMMMMd-NMMMMm.     -mMMMMMm-      +mMMMMMmo. +oooooooo/-                            
+  `dMMMMd`    `yMMMMMMy`yMMMMm.     oMMMMMMh.     :mMMMMMNo`                                          
+  :MMMMm`    :mMMMMMm/ .NMMMN.    .dMMMMMN+`    .hMMMMMNs.                                            
+  oMMMM-   `sMMMMMNs`  :MMMM:   `oNMMMMMy.     oMMMMMMd-                                              
+  /MMMd  `oNMMMMNs.    -NMMm  `+mMMMMMh-     .dMMMMMMo`                                               
+  `sNMMhhMMMMMd+`       oNMMhhNMMMMms-      -mMMMMMN:                                                 
+    :shmmmdy+.           -sdmmmdho-`        oyyyyyy-                                                 
+  ----------------------------------------------------------------------------------------------------
+  oyale + Casino Royale + Casino Royale + Casino Royale + Casino Royale + Casino Royale + Casino Royal
+  ----------------------------------------------------------------------------------------------------
+
+  Installation Instructions -
+
+  	Navigate to Program Files\Steam\SteamApps\SourceMods\gesource
+	Drag and drop the contents of the included "gesource" folder into the main GE:S folder
+	When prompted, agree to merge folders
+	The gameplays are now installed
+
+  Play Instructions -
+
+	Create a server and under "gameplay" put "Casino Royale" or "Casino Royale LTK"
+
+	You can switch to the gamemode after creating a server by using the command in the console:
+		"ge_gameplay casinoroyale" or "ge_gameplay casinoroyaleltk"

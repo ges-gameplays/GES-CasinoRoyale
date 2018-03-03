@@ -1,0 +1,2 @@
+//WEAPON		WEIGHT		GROUP
+moonraker_arena		500		0
