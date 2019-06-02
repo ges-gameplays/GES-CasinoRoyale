@@ -9,7 +9,7 @@ USING_API = GEGlobal.API_VERSION_1_2_0
 # For more information, visit https://euphonic.dev/goldeneye-source/
 
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
-CasinoRoyaleLTKVersion = "^uCasino Royale LTK Version ^l5.0.0"
+CasinoRoyaleLTKVersion = "^uCasino Royale LTK Version ^l5.1.0"
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
 
 class Weapon( object ):
