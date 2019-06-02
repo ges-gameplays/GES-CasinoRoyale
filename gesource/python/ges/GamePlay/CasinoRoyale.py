@@ -5,22 +5,11 @@ import GEPlayer, GEUtil, GEMPGameRules, GEGlobal
 
 USING_API = GEGlobal.API_VERSION_1_2_0
 
-	#	#	#	#	#	#	#	#
-	#							#
-	#     - CasinoRoyale  -     #
-	#							#
-	#	#	#	#	#	#	#	#	#
-			#  						#
-			#  Created by Euphonic  #
-			#						#
-		#	#	#	#	#	#	#	#  #  #
-		# 								  #
-		#  Made for GoldenEye:Source 5.0  #
-		#								  #
-		#	#	#	#	#	#	#	#  #  #
+# Created by Euphonic for GoldenEye: Source 5.0
+# For more information, visit https://euphonic.dev/goldeneye-source/
 
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
-CasinoRoyaleVersion = "^uCasino Royale Version ^l5.0.0"
+CasinoRoyaleVersion = "^uCasino Royale Version ^l5.1.0"
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
 
 class Weapon( object ):
@@ -40,9 +29,9 @@ class CasinoRoyale(GEScenario):
 	def __init__(self):
 		super(CasinoRoyale, self).__init__()
 		
-		weaponListSingleFire = [ Weapon("pp7", "PP7s", 50), Weapon("dd44", "DD44s", 50), Weapon("sniper_rifle", "Sniper Rifles", 75), Weapon("silver_pp7", "Silver PP7s", 25), Weapon("golden_pp7", "Golden PP7s", 10), Weapon("cmag", "Cougar Magnums", 25), Weapon("golden_gun", "Golden Guns", 10), Weapon("shotgun", "Shotguns", 20) ]
-		weaponListAutomatic = [ Weapon("klobb", "Klobbs", 50), Weapon("zmg", "ZMGs", 50), Weapon("d5k", "D5Ks", 50), Weapon("rcp90", "RCP90s", 50), Weapon("phantom", "Phantoms", 50), Weapon("kf7", "KF7s", 75), Weapon("AR33", "AR33s", 75), Weapon("auto_shotgun", "Automatic Shotguns", 20) ]
-		weaponListSpecial = [ Weapon("grenade", "Grenades", 3), Weapon("remotemine", "Remote Mines", 3), Weapon("grenade_launcher", "Grenade Launchers", 4), Weapon("rocket_launcher", "Rocket Launchers", 2), Weapon("knife_throwing", "Throwing Knives", 5), Weapon("moonraker", "Moonraker Lasers", 0), Weapon("knife", "Hunting Knives", 0)]
+		weaponListSingleFire = [ Weapon("pp7", "PP7s", 50), Weapon("pp7_silenced", "Silenced PP7s", 50), Weapon("dd44", "DD44s", 50), Weapon("sniper_rifle", "Sniper Rifles", 75), Weapon("silver_pp7", "Silver PP7s", 25), Weapon("golden_pp7", "Golden PP7s", 10), Weapon("cmag", "Cougar Magnums", 25), Weapon("golden_gun", "Golden Guns", 10) ]
+		weaponListAutomatic = [ Weapon("klobb", "Klobbs", 50), Weapon("zmg", "ZMGs", 50), Weapon("d5k", "D5Ks", 50), Weapon("d5k_silenced", "Silenced D5Ks", 50), Weapon("rcp90", "RCP90s", 50), Weapon("phantom", "Phantoms", 50), Weapon("kf7", "KF7s", 75), Weapon("AR33", "AR33s", 75) ]
+		weaponListSpecial = [ Weapon("shotgun", "Shotguns", 20), Weapon("auto_shotgun", "Automatic Shotguns", 20), Weapon("grenade", "Grenades", 3), Weapon("remotemine", "Remote Mines", 3), Weapon("grenade_launcher", "Grenade Launchers", 4), Weapon("rocket_launcher", "Rocket Launchers", 2), Weapon("knife_throwing", "Throwing Knives", 5), Weapon("moonraker", "Moonraker Lasers", 0), Weapon("knife", "Hunting Knives", 0)]
 		
 		self.weaponList = [weaponListSingleFire, weaponListAutomatic, weaponListSpecial]
 	
@@ -116,10 +105,7 @@ class CasinoRoyale(GEScenario):
 		self.giveWeapons(player)
 		
 	def OnPlayerConnect(self, player):
-		if self.checkFreeSkip():
-			self.playerTracker.SetValue( player, self.USED_SKIP, False )
-		else:
-			self.playerTracker.SetValue( player, self.USED_SKIP, True )
+		self.playerTracker.SetValue( player, self.USED_SKIP, False )
 
 	def OnRoundBegin(self):
 		self.isRoundActive = True
@@ -127,20 +113,12 @@ class CasinoRoyale(GEScenario):
 		GEMPGameRules.DisableWeaponSpawns()
 		self.weaponTimer = self.timerMax
 		self.generateIndex()
+		self.updateSkips()
 		self.resetRoundScore()
-		GEMPGameRules.ResetAllPlayersScores()
-		if self.checkFreeSkip():
-			self.updateSkips()
-		else:
-			for i in range(32):
-				if not GEPlayer.IsValidPlayerIndex(i):
-					continue
-				player = GEPlayer.GetMPPlayer(i)
-				self.playerTracker.SetValue( player, self.USED_SKIP, True )
-
+		
 	def OnRoundEnd(self):
 		self.isRoundActive = False
-		GEUtil.ServerCommand("ge_weaponset moonraker_arena")
+		
 		if GEMPGameRules.IsTeamplay() and int(GEUtil.GetCVarValue("cr_teamscoring")) == 1:
 			self.awardRoundScore()
 			self.hideRoundScore(None)
@@ -196,8 +174,7 @@ class CasinoRoyale(GEScenario):
 					if not GEPlayer.IsValidPlayerIndex(i):
 						continue
 					player = GEPlayer.GetMPPlayer(i)
-					if self.checkFreeSkip():
-						self.playerTracker.SetValue( player, self.USED_SKIP, False )
+					self.playerTracker.SetValue( player, self.USED_SKIP, False )
 					self.showSkipText(player)
 	
 		elif name == "ge_teamplay" and newvalue == 0:
@@ -207,7 +184,7 @@ class CasinoRoyale(GEScenario):
 		if text == "!version":
 			GEUtil.ClientPrint(player, GEGlobal.HUD_PRINTTALK, CasinoRoyaleVersion)
 
-		elif text == "!voodoo" and int(GEUtil.GetCVarValue("cr_skip")):
+		elif text == "!voodoo":
 			if self.playerTracker.GetValue( player, self.USED_SKIP):
 				GEUtil.PlaySoundToPlayer( player, "Buttons.beep_denied", False )
 			else:
@@ -243,11 +220,16 @@ class CasinoRoyale(GEScenario):
 		GEUtil.PrecacheSound("Buttons.beep_denied")
 		self.CreateCVar("cr_timer", str(int(self.timerMax) / 10), "Amount of time (in seconds) between weapon switches")
 		self.CreateCVar("cr_skip", "1", "Enable players to use their 'skip' to switch to next weapon immediately")
-		self.CreateCVar("cr_free_skip", "1", "0 never starts players with a skip, 1 only when not teamplay or when teamscoring is off, 2 always gives a skip")
 		self.CreateCVar("cr_teamscoring", "1", "When enabled, team scoring is the number of weapon 'rounds' in which that team had the most kills; changing from 0 to 1 restarts the round")
 		GEMPGameRules.SetAllowTeamSpawns( False )
 		GEMPGameRules.GetTokenMgr().SetGlobalAmmo( "weapon_moonraker", 0 )	# Fixes glitch where hunting knives cause ammo spawns not to function
-		GEUtil.ServerCommand("ge_weaponset moonraker_arena")
+
+	def OnUnloadGamePlay(self):
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.scoreDisplayChannel )
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.skipMSgChannel )
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.weaponMsgChannel )
+		GEUtil.RemoveHudProgressBar(None, self.timerBarIndex)
+		GEUtil.RemoveHudProgressBar(None, self.skipTextIndex)
 
 	def OnPlayerKilled(self, victim, killer, weapon):
 		#what exactly got killed?
@@ -418,11 +400,3 @@ class CasinoRoyale(GEScenario):
 			GEUtil.InitHudProgressBar(target, self.skipTextIndex, "[SKIP]", 0, float(self.timerMax), .59, .03, 35, 10, self.skipTextColor )
 		else:
 			GEUtil.InitHudProgressBar(target, self.skipTextIndex, "[SKIP]", 0, float(self.timerMax), .59, .03, 35, 10, self.skipTextFadedColor )
-
-	def checkFreeSkip(self):
-		if int(GEUtil.GetCVarValue("cr_free_skip")) == 2:
-			return True
-		elif int(GEUtil.GetCVarValue("cr_free_skip")) == 1 and (not int(GEUtil.GetCVarValue("cr_teamscoring")) or not GEMPGameRules.IsTeamplay()):
-			return True
-		else:
-			return False

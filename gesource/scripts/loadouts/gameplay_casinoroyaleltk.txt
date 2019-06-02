@@ -1,2 +1,2 @@
-//WEAPON		WEIGHT		GROUP
-moonraker_arena		500		0
+//WEAPON	WEIGHT		GROUP
+notused		500		0

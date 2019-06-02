@@ -5,20 +5,8 @@ import GEPlayer, GEUtil, GEMPGameRules, GEGlobal
 
 USING_API = GEGlobal.API_VERSION_1_2_0
 
-	#	#	#	#	#	#	#	#
-	#							#
-	#      - CasinoRoyale -     #
-	#           [LTK]           #
-	#							#
-	#	#	#	#	#	#	#	#	#
-			#  						#
-			#  Created by Euphonic  #
-			#						#
-		#	#	#	#	#	#	#	#  #  #
-		# 								  #
-		#  Made for GoldenEye:Source 5.0  #
-		#								  #
-		#	#	#	#	#	#	#	#  #  #
+# Created by Euphonic for GoldenEye: Source 5.0
+# For more information, visit https://euphonic.dev/goldeneye-source/
 
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
 CasinoRoyaleLTKVersion = "^uCasino Royale LTK Version ^l5.0.0"
@@ -41,7 +29,7 @@ class CasinoRoyaleLTK(GEScenario):
 	def __init__(self):
 		super(CasinoRoyaleLTK, self).__init__()
 		
-		weaponListLTK = [ Weapon("pp7_silenced", "Silenced PP7s", 50), Weapon("dd44", "DD44s", 50), Weapon("sniper_rifle", "Sniper Rifles", 75), Weapon("silver_pp7", "Silver PP7s", 25), Weapon("golden_pp7", "Golden PP7s", 10), Weapon("cmag", "Cougar Magnums", 25), Weapon("golden_gun", "Golden Guns", 10), Weapon("klobb", "Klobbs", 50), Weapon("shotgun", "Shotguns", 20), Weapon("auto_shotgun", "Automatic Shotguns", 20), Weapon("grenade", "Grenades", 3), Weapon("knife_throwing", "Throwing Knives", 5), Weapon("moonraker", "Moonraker Lasers", 0), Weapon("knife", "Hunting Knives", 0) ]
+		weaponListLTK = [ Weapon("pp7", "PP7s", 50), Weapon("pp7_silenced", "Silenced PP7s", 50), Weapon("dd44", "DD44s", 50), Weapon("sniper_rifle", "Sniper Rifles", 75), Weapon("silver_pp7", "Silver PP7s", 25), Weapon("golden_pp7", "Golden PP7s", 10), Weapon("cmag", "Cougar Magnums", 25), Weapon("golden_gun", "Golden Guns", 10), Weapon("klobb", "Klobbs", 50), Weapon("shotgun", "Shotguns", 20), Weapon("grenade", "Grenades", 3), Weapon("knife_throwing", "Throwing Knives", 5), Weapon("moonraker", "Moonraker Lasers", 0), Weapon("knife", "Hunting Knives", 0) ]
 		
 		self.weaponList = [weaponListLTK]
 	
@@ -115,32 +103,22 @@ class CasinoRoyaleLTK(GEScenario):
 		self.giveWeapons(player)
 		
 	def OnPlayerConnect(self, player):
-		if self.checkFreeSkip():
-			self.playerTracker.SetValue( player, self.USED_SKIP, False )
-		else:
-			self.playerTracker.SetValue( player, self.USED_SKIP, True )
+		self.playerTracker.SetValue( player, self.USED_SKIP, False )
 		self.setDamageMultiplier( 1000 )
 
 	def OnRoundBegin(self):
 		self.isRoundActive = True
+		GEMPGameRules.ResetAllPlayersScores()
 		GEMPGameRules.DisableWeaponSpawns()
 		GEMPGameRules.DisableArmorSpawns()
 		self.weaponTimer = self.timerMax
 		self.generateIndex()
+		self.updateSkips()
 		self.resetRoundScore()
-		GEMPGameRules.ResetAllPlayersScores()
-		if self.checkFreeSkip():
-			self.updateSkips()
-		else:
-			for i in range(32):
-				if not GEPlayer.IsValidPlayerIndex(i):
-					continue
-				player = GEPlayer.GetMPPlayer(i)
-				self.playerTracker.SetValue( player, self.USED_SKIP, True )
-
+		
 	def OnRoundEnd(self):
 		self.isRoundActive = False
-		GEUtil.ServerCommand("ge_weaponset moonraker_arena")
+		
 		if GEMPGameRules.IsTeamplay() and int(GEUtil.GetCVarValue("cr_teamscoring")) == 1:
 			self.awardRoundScore()
 			self.hideRoundScore(None)
@@ -196,8 +174,7 @@ class CasinoRoyaleLTK(GEScenario):
 					if not GEPlayer.IsValidPlayerIndex(i):
 						continue
 					player = GEPlayer.GetMPPlayer(i)
-					if self.checkFreeSkip():
-						self.playerTracker.SetValue( player, self.USED_SKIP, False )
+					self.playerTracker.SetValue( player, self.USED_SKIP, False )
 					self.showSkipText(player)
 	
 		elif name == "ge_teamplay" and newvalue == 0:
@@ -207,7 +184,7 @@ class CasinoRoyaleLTK(GEScenario):
 		if text == "!version":
 			GEUtil.ClientPrint(player, GEGlobal.HUD_PRINTTALK, CasinoRoyaleLTKVersion)
 
-		elif text == "!voodoo" and int(GEUtil.GetCVarValue("cr_skip")):
+		elif text == "!voodoo":
 			if self.playerTracker.GetValue( player, self.USED_SKIP):
 				GEUtil.PlaySoundToPlayer( player, "Buttons.beep_denied", False )
 			else:
@@ -226,7 +203,7 @@ class CasinoRoyaleLTK(GEScenario):
 		return "Casino Royale LTK"
 		
 	def GetScenarioHelp( self, help_obj ):
-		help_obj.SetDescription( "Better stay alert in this constantly evolving gamemode!\n\nAll players carry the same weapon. Every time the counter depletes, a new weapon will be randomly selected and the chaos continues!\n\nOnce per round, press your '!voodoo' key to skip to the next weapon. Melee kills restore this ability. Change your !voodoo key under Keyboard Options.\n\nTeamplay: Toggleable\n\nCreated by Euphonic" )
+		help_obj.SetDescription( "Better stay alert in this constantly evolving gamemode where one shot kills!\n\nAll players carry the same weapon. Every time the counter depletes, a new weapon will be randomly selected and the chaos continues!\n\nOnce per round, press your '!voodoo' key to skip to the next weapon. Melee kills restore this ability. Change your !voodoo key under Keyboard Options.\n\nTeamplay: Toggleable\n\nCreated by Euphonic" )
 		
 	def GetGameDescription(self):
 		if GEMPGameRules.IsTeamplay():
@@ -243,15 +220,19 @@ class CasinoRoyaleLTK(GEScenario):
 		GEUtil.PrecacheSound("Buttons.beep_denied")
 		self.CreateCVar("cr_timer", str(int(self.timerMax) / 10), "Amount of time (in seconds) between weapon switches")
 		self.CreateCVar("cr_skip", "1", "Enable players to use their 'skip' to switch to next weapon immediately")
-		self.CreateCVar("cr_free_skip", "1", "0 never starts players with a skip, 1 only when not teamplay or when teamscoring is off, 2 always gives a skip")
 		self.CreateCVar("cr_teamscoring", "1", "When enabled, team scoring is the number of weapon 'rounds' in which that team had the most kills; changing from 0 to 1 restarts the round")
 		GEMPGameRules.SetAllowTeamSpawns( False )
 		GEMPGameRules.GetTokenMgr().SetGlobalAmmo( "weapon_moonraker", 0 )	# Fixes glitch where hunting knives cause ammo spawns not to function
-		GEUtil.ServerCommand("ge_weaponset moonraker_arena")
+		
 		self.setDamageMultiplier( 1000 )
 
 	def OnUnloadGamePlay(self):
 		self.SetDamageMultiplier( 1 )
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.scoreDisplayChannel )
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.skipMSgChannel )
+		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.weaponMsgChannel )
+		GEUtil.RemoveHudProgressBar(None, self.timerBarIndex)
+		GEUtil.RemoveHudProgressBar(None, self.skipTextIndex)
 
 	def OnPlayerKilled(self, victim, killer, weapon):
 		#what exactly got killed?
@@ -423,17 +404,9 @@ class CasinoRoyaleLTK(GEScenario):
 		else:
 			GEUtil.InitHudProgressBar(target, self.skipTextIndex, "[SKIP]", 0, float(self.timerMax), .59, .03, 35, 10, self.skipTextFadedColor )
 
-	def checkFreeSkip(self):
-		if int(GEUtil.GetCVarValue("cr_free_skip")) == 2:
-			return True
-		elif int(GEUtil.GetCVarValue("cr_free_skip")) == 1 and (not int(GEUtil.GetCVarValue("cr_teamscoring")) or not GEMPGameRules.IsTeamplay()):
-			return True
-		else:
-			return False
-
 	def setDamageMultiplier(self, amount):
 		for i in range(32):
 			if not GEPlayer.IsValidPlayerIndex(i):
 				continue
 			player = GEPlayer.GetMPPlayer(i)
-			player.SetDamageMultiplier(amount)
+			player.SetDamageMultiplier(amount)		
