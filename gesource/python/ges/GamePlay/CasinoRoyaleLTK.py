@@ -227,12 +227,12 @@ class CasinoRoyaleLTK(GEScenario):
 		self.setDamageMultiplier( 1000 )
 
 	def OnUnloadGamePlay(self):
-		self.SetDamageMultiplier( 1 )
 		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.scoreDisplayChannel )
 		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.skipMSgChannel )
 		GEUtil.HudMessage( None, "", -1, 0.0, GEUtil.CColor(255,255,255,255), 0, self.weaponMsgChannel )
 		GEUtil.RemoveHudProgressBar(None, self.timerBarIndex)
 		GEUtil.RemoveHudProgressBar(None, self.skipTextIndex)
+		self.setDamageMultiplier( 1 )
 
 	def OnPlayerKilled(self, victim, killer, weapon):
 		#what exactly got killed?
