@@ -4,7 +4,7 @@ A repository for the GoldenEye: Source gameplays "Casino Royale" and "Casino Roy
 
 ---
 
-Installation Instructions
+**Installation Instructions**
 
 • Navigate to Program Files\Steam\SteamApps\SourceMods\gesource
 
