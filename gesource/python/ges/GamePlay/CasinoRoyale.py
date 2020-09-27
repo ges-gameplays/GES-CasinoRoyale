@@ -9,7 +9,7 @@ USING_API = GEGlobal.API_VERSION_1_2_0
 # For more information, visit https://euphonic.dev/goldeneye-source/
 
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
-CasinoRoyaleVersion = "^uCasino Royale Version ^l5.1.0"
+CasinoRoyaleVersion = "^uCasino Royale Version ^l5.1.1"
 #	* / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / * / *
 
 class Weapon( object ):
@@ -182,7 +182,7 @@ class CasinoRoyale(GEScenario):
 			
 	def OnPlayerSay(self, player, text):
 		if text == "!version":
-			GEUtil.ClientPrint(player, GEGlobal.HUD_PRINTTALK, CasinoRoyaleVersion)
+			GEUtil.ClientPrint(None, GEGlobal.HUD_PRINTTALK, CasinoRoyaleVersion)
 
 		elif text == "!voodoo":
 			if self.playerTracker.GetValue( player, self.USED_SKIP):
@@ -203,7 +203,8 @@ class CasinoRoyale(GEScenario):
 		return "Casino Royale"
 		
 	def GetScenarioHelp( self, help_obj ):
-		help_obj.SetDescription( "Better stay alert in this constantly evolving gamemode!\n\nAll players carry the same weapon. Every time the counter depletes, a new weapon will be randomly selected and the chaos continues!\n\nOnce per round, press your '!voodoo' key to skip to the next weapon. Melee kills restore this ability. Change your !voodoo key under Keyboard Options.\n\nTeamplay: Toggleable\n\nCreated by Euphonic" )
+		help_obj.SetDescription( "Better stay alert in this constantly evolving game mode!\n\nAll players carry the same weapon. Every time the counter depletes, a new weapon will be randomly selected, and the chaos continues!\n\nOnce per round, press your '!voodoo' key to skip to the next weapon. Melee kills restore this ability. Change your !voodoo key under Keyboard Options.\n\nTeamplay: Toggleable\n\nCreated by Euphonic" )
+		help_obj.SetInfo("Fight With Constantly Changing Weapons", "https://euphonic.dev/goldeneye-source/casino-royale/" )
 		
 	def GetGameDescription(self):
 		if GEMPGameRules.IsTeamplay():
